@@ -2,7 +2,9 @@
 
 ```
 cp .env.example .env 
-docker-compose up --build
+docker-compose build
+docker-compose up -d db
+docker-compose up
 ```
 ### Swagger
 ```
