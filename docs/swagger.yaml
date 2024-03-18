@@ -1,0 +1,347 @@
+basePath: /
+definitions:
+  FilmCatalog.Actor:
+    properties:
+      birthday:
+        type: string
+      films:
+        items:
+          $ref: '#/definitions/FilmCatalog.Film'
+        type: array
+      gender:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  FilmCatalog.CreateFilmDTO:
+    properties:
+      actors:
+        items:
+          type: integer
+        type: array
+      description:
+        maxLength: 1000
+        type: string
+      name:
+        description: sort and search
+        maxLength: 150
+        minLength: 1
+        type: string
+      rating:
+        description: sort(default)
+        maximum: 10
+        minimum: 0
+        type: integer
+      release:
+        description: sort
+        type: string
+    type: object
+  FilmCatalog.Film:
+    properties:
+      actors:
+        items:
+          $ref: '#/definitions/FilmCatalog.Actor'
+        type: array
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        description: sort and search
+        type: string
+      rating:
+        description: sort(default)
+        type: integer
+      release:
+        description: sort
+        type: string
+    type: object
+  FilmCatalog.UpdateFilmDTO:
+    properties:
+      actors:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      rating:
+        type: integer
+      release:
+        type: string
+    type: object
+  FilmCatalog.User:
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Catalog of films and actors
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Swagger FilmCatalog API
+  version: "1.0"
+paths:
+  /api/actor:
+    delete:
+      operationId: delete_actor
+      parameters:
+      - description: actor id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: delete actor
+      tags:
+      - actor
+    get:
+      operationId: get_actor
+      parameters:
+      - description: actor id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/FilmCatalog.Actor'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: get actor by id
+      tags:
+      - actor
+    patch:
+      operationId: update_actor
+      parameters:
+      - description: actor data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/FilmCatalog.Actor'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: update actor
+      tags:
+      - actor
+  /api/actors:
+    get:
+      operationId: get_actors
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/FilmCatalog.Actor'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: get all actors
+      tags:
+      - actor
+    post:
+      operationId: create_actor
+      parameters:
+      - description: actor data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/FilmCatalog.Actor'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: create actor
+      tags:
+      - actor
+  /api/film:
+    delete:
+      operationId: delete_film
+      parameters:
+      - description: film id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: delete film
+      tags:
+      - film
+    get:
+      operationId: get_film
+      parameters:
+      - description: film id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/FilmCatalog.Film'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: get film by id
+      tags:
+      - film
+    patch:
+      operationId: update_film
+      parameters:
+      - description: film data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/FilmCatalog.UpdateFilmDTO'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: update film
+      tags:
+      - film
+  /api/films:
+    get:
+      operationId: get_films
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/FilmCatalog.Film'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: get all films
+      tags:
+      - film
+    post:
+      operationId: create_film
+      parameters:
+      - description: film data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/FilmCatalog.CreateFilmDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - BasicAuth: []
+      summary: create film
+      tags:
+      - film
+  /api/sign-up:
+    post:
+      operationId: sign-up
+      parameters:
+      - description: user data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/FilmCatalog.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: sign-up
+      tags:
+      - user
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
