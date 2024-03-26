@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -16,8 +15,7 @@ func TestValidateSort(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		testname := fmt.Sprintf("%s", tt.s)
-		t.Run(testname, func(t *testing.T) {
+		t.Run(tt.s, func(t *testing.T) {
 			ans := ValidateSort(tt.s)
 			assert.Equal(t, ans, tt.want)
 		})
