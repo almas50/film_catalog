@@ -1,14 +1,10 @@
-FROM golang:latest
-LABEL authors="almas"
-
-RUN go version
-ENV GOPATH=/
+FROM golang:1.22-alpine3.19
+WORKDIR /usr/src/app
 
 COPY ./ ./
 
-RUN go mod download
-RUN go build -o film_catalog_app ./cmd/main.go
+RUN go mod download && go mod verify
 
-EXPOSE 8080
+RUN go build -o film_catalog_app ./cmd/main.go
 
 CMD ["./film_catalog_app"]
